@@ -6,4 +6,4 @@ https://expo.io/learn
 
 - expo init myNewProject
 - cd myNewProject
-- expo start
+- npm start
