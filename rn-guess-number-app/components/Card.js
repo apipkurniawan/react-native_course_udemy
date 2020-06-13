@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: 'white',
         padding: 20,
+        marginBottom: 10,
         borderRadius: 10,
         /* to make shadow in ios use (shadow property)*/
         shadowColor: 'black',
