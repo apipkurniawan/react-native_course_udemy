@@ -100,8 +100,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15
     },
     inputContainer: {
-        width: 300,
-        maxWidth: '100%',
+        width: '80%',
+        maxWidth: '95%',
+        minWidth: 300,
         alignItems: 'center'
     },
     title: {

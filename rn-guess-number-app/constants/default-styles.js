@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 /* global style */
 export default StyleSheet.create({
@@ -9,6 +9,7 @@ export default StyleSheet.create({
         fontSize: 18,
     },
     btn: {
-        width: 100
+        // width: 100
+        width: Dimensions.get('window').width / 4
     }
 });

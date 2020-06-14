@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button, Image } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, Image, Dimensions } from 'react-native';
 
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
@@ -8,6 +8,7 @@ import Colors from '../constants/Colors';
 
 const GameOverScreen = props => {
     return (
+        // <ScrollView>
         <View style={styles.screen}>
             <TitleText style={styles.title}>The Game is Over!</TitleText>
             <View style={styles.imageContainer}>
@@ -21,17 +22,19 @@ const GameOverScreen = props => {
                     resizeMode='cover'
                 />
             </View>
-            <BodyText>
-                Number of rounds :
-                <Text style={styles.highlight}> {props.roundsNumber}</Text>
+            {/* <View style={styles.resultContainer}> */}
+            <BodyText> Number of rounds :
+                    <Text style={styles.highlight}> {props.roundsNumber}</Text>
             </BodyText>
             <BodyText>Number was :
-                <Text style={styles.highlight}> {props.userNumber}</Text>
+                    <Text style={styles.highlight}> {props.userNumber}</Text>
             </BodyText>
+            {/* </View> */}
             <View style={styles.button}>
                 <MainButton onClick={props.onRestart} >NEW GAME</MainButton>
             </View>
         </View>
+        // </ScrollView>
     );
 };
 
@@ -53,14 +56,22 @@ const styles = StyleSheet.create({
         height: '100%'
     },
     imageContainer: {
-        width: 300,
-        height: 300,
-        borderRadius: 150,
+        width: Dimensions.get('window').width * 0.7,
+        height: Dimensions.get('window').width * 0.7,
+        borderRadius: Dimensions.get('window').width * 0.7 / 2,
         borderWidth: 3,
         borderColor: 'black',
         overflow: 'hidden',
-        marginVertical: 10
+        marginVertical: 15
     },
+    // resultContainer: {
+    //     marginHorizontal: 30,
+    //     marginVertical: Dimensions.get('window').height / 60
+    // },
+    // resultText: {
+    //     textAlign: 'center',
+    //     fontSize: Dimensions.get('window').height < 400 ? 16 : 20
+    // },
     highlight: {
         color: Colors.accent
     }
