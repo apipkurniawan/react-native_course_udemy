@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, Button, View, Text, TouchableWithoutFeedback, Keyboard, Alert } from "react-native";
+import { StyleSheet, Button, View, TouchableWithoutFeedback, Keyboard, Alert } from "react-native";
 import Card from "../components/Card";
 import Input from "../components/Input";
 import BodyText from "../components/BodyText";
 import TitleText from "../components/TitleText";
+import MainButton from "../components/MainButton";
 import NumberContainer from "../components/NumberContainer";
 import Colors from "../constants/Colors";
+import DefaultStyles from "../constants/default-styles";
 
 const StartGameScreen = props => {
     const [enteredValue, setEnteredValue] = useState('');
@@ -43,7 +45,7 @@ const StartGameScreen = props => {
             <Card style={styles.summaryContainer}>
                 <BodyText>You selected</BodyText>
                 <NumberContainer>{selectedNumber}</NumberContainer>
-                <Button title="START GAME" onPress={() => props.onStartGame(selectedNumber)} />
+                <MainButton onClick={() => props.onStartGame(selectedNumber)}>START GAME</MainButton>
             </Card>
         )
     }
@@ -67,10 +69,10 @@ const StartGameScreen = props => {
                         value={enteredValue}
                     />
                     <View style={styles.btnContainer}>
-                        <View style={styles.button}>
+                        <View style={DefaultStyles.btn}>
                             <Button title="Reset" color={Colors.accent} onPress={resetInputHandler} />
                         </View>
-                        <View style={styles.button}>
+                        <View style={DefaultStyles.btn}>
                             <Button title="Confirm" color={Colors.primary} onPress={confirmInputHandler} />
                         </View>
                     </View>
@@ -100,9 +102,6 @@ const styles = StyleSheet.create({
     },
     title: {
         marginVertical: 10
-    },
-    button: {
-        width: 100
     },
     input: {
         width: 50,

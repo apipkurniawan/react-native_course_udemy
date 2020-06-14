@@ -7,5 +7,8 @@ export default StyleSheet.create({
         marginBottom: 5,
         fontFamily: 'open-sans-bold',
         fontSize: 18,
+    },
+    btn: {
+        width: 100
     }
 });

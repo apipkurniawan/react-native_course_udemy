@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, StyleSheet, Button, Image } from 'react-native';
+import { View, StyleSheet, Text, Button, Image } from 'react-native';
 
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
+import MainButton from '../components/MainButton';
+import Colors from '../constants/Colors';
 
 const GameOverScreen = props => {
     return (
@@ -10,15 +12,24 @@ const GameOverScreen = props => {
             <TitleText style={styles.title}>The Game is Over!</TitleText>
             <View style={styles.imageContainer}>
                 <Image
+                    fadeDuration={1000}
+                    /* using local image */
                     source={require('../assets/pict.png')}
+                    /* using network image */
+                    // source={{ uri: 'https://pixabay.com/photos/summit-mountain-snow-target-3948706/' }}
                     style={styles.image}
                     resizeMode='cover'
                 />
             </View>
-            <BodyText>Number of rounds : {props.roundsNumber}</BodyText>
-            <BodyText>Number was : {props.userNumber}</BodyText>
+            <BodyText>
+                Number of rounds :
+                <Text style={styles.highlight}> {props.roundsNumber}</Text>
+            </BodyText>
+            <BodyText>Number was :
+                <Text style={styles.highlight}> {props.userNumber}</Text>
+            </BodyText>
             <View style={styles.button}>
-                <Button title="NEW GAME" onPress={props.onRestart} />
+                <MainButton onClick={props.onRestart} >NEW GAME</MainButton>
             </View>
         </View>
     );
@@ -49,6 +60,9 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         overflow: 'hidden',
         marginVertical: 10
+    },
+    highlight: {
+        color: Colors.accent
     }
 });
 
