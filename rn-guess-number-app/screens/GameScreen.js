@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, Text, StyleSheet, Button, Alert } from "react-native";
+import { View, Text, StyleSheet, Button, Alert, ScrollView, FlatList } from "react-native";
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
+import BodyText from '../components/BodyText';
 import DefaultStyles from '../constants/default-styles'; // using global style
 
 const generateRandomBetween = (min, max, exclude) => {
@@ -15,17 +16,41 @@ const generateRandomBetween = (min, max, exclude) => {
     }
 };
 
+/* looping data cara 1 : */
+// const renderListItem = (value, numOfRound) => {
+//     return (
+//         <View key={value} style={styles.listItem}>
+//             <BodyText>#{numOfRound}</BodyText>
+//             <BodyText>{value}</BodyText>
+//         </View>
+//     );
+// };
+
+/* looping data cara 2 : */
+const renderListItem = (listLength, itemData) => {
+    return (
+        <View style={styles.listItem}>
+            <BodyText>#{listLength - itemData.index}</BodyText>
+            <BodyText>{itemData.item}</BodyText>
+        </View>
+    );
+};
+
 const GameScreen = props => {
     const { userChoise, onGameOver } = props;
-    const [currentGuess, setCurrentGuess] = useState(generateRandomBetween(1, 100, userChoise));
-    const [rounds, setRounds] = useState(0);
+    const initialiGuess = generateRandomBetween(1, 100, userChoise);
+    const [currentGuess, setCurrentGuess] = useState(initialiGuess);
+    /* cara 1 */
+    // const [pastGuesses, setPastGuesses] = useState([initialiGuess]);
+    /* cara 2 */
+    const [pastGuesses, setPastGuesses] = useState([initialiGuess.toString()]);
 
     const currentLow = useRef(1);
     const currentHigh = useRef(100);
 
     useEffect(() => {
         if (currentGuess === userChoise) {
-            onGameOver(rounds);
+            onGameOver(pastGuesses.length);
         }
     }, [currentGuess, userChoise, onGameOver]);
 
@@ -37,11 +62,14 @@ const GameScreen = props => {
         if (direction === 'lower') {
             currentHigh.current = currentGuess;
         } else {
-            currentLow.current = currentGuess;
+            currentLow.current = currentGuess + 1;
         }
         const nextNumber = generateRandomBetween(currentLow.current, currentHigh.current, currentGuess);
         setCurrentGuess(nextNumber);
-        setRounds(curRounds => curRounds + 1);
+        /* cara 1 */
+        // setPastGuesses(curPastGuesses => [nextNumber, ...curPastGuesses])
+        /* cara 2 */
+        setPastGuesses(curPastGuesses => [nextNumber.toString(), ...curPastGuesses])
     };
 
     return (
@@ -56,6 +84,19 @@ const GameScreen = props => {
                     <Button title="GREATER" onPress={nextGuessHandler.bind(this, 'greater')} />
                 </View>
             </Card>
+            <View style={styles.listContainer}>
+                {/* looping data cara 1 : */}
+                {/* <ScrollView contentContainerStyle={styles.list}>
+                    {pastGuesses.map((guess, index) => renderListItem(guess, pastGuesses.length - index))}
+                </ScrollView> */}
+                {/* looping data cara 2 : */}
+                <FlatList
+                    contentContainerStyle={styles.list}
+                    keyExtractor={item => item}
+                    data={pastGuesses}
+                    renderItem={renderListItem.bind(this, pastGuesses.length)}
+                />
+            </View>
         </View>
     )
 };
@@ -72,6 +113,25 @@ const styles = StyleSheet.create({
         marginTop: 20,
         width: 300,
         maxWidth: '80%'
+    },
+    list: {
+        flexGrow: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-end'
+    },
+    listContainer: {
+        flex: 1,
+        width: '80%'
+    },
+    listItem: {
+        borderColor: '#ccc',
+        padding: 15,
+        marginVertical: 10,
+        borderWidth: 1,
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '60%'
     }
 });
 
