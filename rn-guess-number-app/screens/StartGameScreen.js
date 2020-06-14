@@ -8,6 +8,7 @@ import MainButton from "../components/MainButton";
 import NumberContainer from "../components/NumberContainer";
 import Colors from "../constants/Colors";
 import DefaultStyles from "../constants/default-styles";
+import { AntDesign } from '@expo/vector-icons';
 
 const StartGameScreen = props => {
     const [enteredValue, setEnteredValue] = useState('');
@@ -45,7 +46,10 @@ const StartGameScreen = props => {
             <Card style={styles.summaryContainer}>
                 <BodyText>You selected</BodyText>
                 <NumberContainer>{selectedNumber}</NumberContainer>
-                <MainButton onClick={() => props.onStartGame(selectedNumber)}>START GAME</MainButton>
+                <MainButton onClick={() => props.onStartGame(selectedNumber)}>
+                    {/* icon button */}
+                    <AntDesign name="play" size={20} color="black" /> PLAY
+                </MainButton>
             </Card>
         )
     }
