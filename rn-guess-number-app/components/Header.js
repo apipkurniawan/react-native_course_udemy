@@ -21,8 +21,9 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         color: 'black',
-        fontWeight: 'bold',
-        fontSize: 22
+        fontSize: 22,
+        fontFamily: 'open-sans-bold',
+        marginTop: 30
     }
 });
 
