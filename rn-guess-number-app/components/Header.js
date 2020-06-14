@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     headerTitle: {
         color: 'black',
         fontSize: 22,
-        fontFamily: 'open-sans-bold',
+        fontFamily: 'open-sans',
         marginTop: 30
     }
 });
