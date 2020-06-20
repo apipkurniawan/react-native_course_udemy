@@ -45,6 +45,20 @@ const GameScreen = props => {
     /* cara 2 */
     const [pastGuesses, setPastGuesses] = useState([initialiGuess.toString()]);
 
+    /* set width when orientation is landscape */
+    const [availableDeviceWidth, setAvailableDeviceWidth] = useState(Dimensions.get('window').width);
+    const [availableDeviceHeight, setAvailableDeviceHeight] = useState(Dimensions.get('window').height);
+    useEffect(() => {
+        const updateLayout = () => {
+            setAvailableDeviceHeight(Dimensions.get('window').height);
+            setAvailableDeviceWidth(Dimensions.get('window').width);
+        };
+        Dimensions.addEventListener('change', updateLayout);
+        return () => {
+            Dimensions.removeEventListener('change', updateLayout);
+        }
+    });
+
     const currentLow = useRef(1);
     const currentHigh = useRef(100);
 
@@ -73,13 +87,38 @@ const GameScreen = props => {
     };
 
     let listContainerStyle = styles.listContainer;
-    if (Dimensions.get('window').width < 350) {
+    if (availableDeviceWidth < 350) {
         listContainerStyle = styles.listContainerBig;
-    }
+    };
 
-    return (
-        <View style={styles.screen}>
-            <Text style={DefaultStyles.title}>Opponent's Guess</Text>
+    /* set layout when orientation is landscape */
+    if (availableDeviceHeight < 500) {
+        return (
+            <View style={styles.screen}>
+                <Text style={DefaultStyles.title}>Opponent's Guess</Text>
+                <View style={styles.controls}>
+                    <View style={DefaultStyles.btn}>
+                        <Button title="LOWER" onPress={nextGuessHandler.bind(this, 'lower')} />
+                    </View>
+                    <NumberContainer>{currentGuess}</NumberContainer>
+                    <View style={DefaultStyles.btn}>
+                        <Button title="GREATER" onPress={nextGuessHandler.bind(this, 'greater')} />
+                    </View>
+                </View>
+                <View style={listContainerStyle}>
+                    <FlatList
+                        contentContainerStyle={styles.list}
+                        keyExtractor={item => item}
+                        data={pastGuesses}
+                        renderItem={renderListItem.bind(this, pastGuesses.length)}
+                    />
+                </View>
+            </View>
+        );
+    };
+
+    let gameControls = (
+        <React.Fragment>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card style={styles.buttonContainer}>
                 <View style={DefaultStyles.btn}>
@@ -89,6 +128,26 @@ const GameScreen = props => {
                     <Button title="GREATER" onPress={nextGuessHandler.bind(this, 'greater')} />
                 </View>
             </Card>
+        </React.Fragment>
+    )
+
+    if (availableDeviceHeight < 500) {
+        gameControls = (
+            <View style={styles.controls}>
+                <View style={DefaultStyles.btn}>
+                    <Button title="LOWER" onPress={nextGuessHandler.bind(this, 'lower')} />
+                </View>
+                <View style={DefaultStyles.btn}>
+                    <Button title="GREATER" onPress={nextGuessHandler.bind(this, 'greater')} />
+                </View>
+            </View>
+        );
+    }
+
+    return (
+        <View style={styles.screen}>
+            <Text style={DefaultStyles.title}>Opponent's Guess</Text>
+            {gameControls}
             <View style={listContainerStyle}>
                 {/* looping data cara 1 : */}
                 {/* <ScrollView contentContainerStyle={styles.list}>
@@ -99,6 +158,7 @@ const GameScreen = props => {
                     contentContainerStyle={styles.list}
                     keyExtractor={item => item}
                     data={pastGuesses}
+                    contentContainerStyle={styles.list}
                     renderItem={renderListItem.bind(this, pastGuesses.length)}
                 />
             </View>
@@ -115,9 +175,17 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: Dimensions.get('window').height > 600 ? 20 : 5,
-        width: 300,
-        maxWidth: '80%'
+        // marginTop: Dimensions.get('window').height > 600 ? 20 : 5,
+        // width: 300,
+        // maxWidth: '80%',
+        width: 400,
+        maxWidth: '90%'
+    },
+    controls: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '80%',
+        alignItems: 'center'
     },
     list: {
         flexGrow: 1,

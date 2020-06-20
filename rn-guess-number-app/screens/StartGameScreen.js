@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
     Button,
@@ -7,7 +7,8 @@ import {
     Keyboard,
     Alert,
     ScrollView,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Dimensions
 } from "react-native";
 import Card from "../components/Card";
 import Input from "../components/Input";
@@ -16,13 +17,14 @@ import TitleText from "../components/TitleText";
 import MainButton from "../components/MainButton";
 import NumberContainer from "../components/NumberContainer";
 import Colors from "../constants/Colors";
-import DefaultStyles from "../constants/default-styles";
 import { AntDesign } from '@expo/vector-icons';
 
 const StartGameScreen = props => {
     const [enteredValue, setEnteredValue] = useState('');
     const [confirmed, setConfirmed] = useState(false);
     const [selectedNumber, setSelectedNumber] = useState('');
+    /* handle width button orientation */
+    const [buttonWidth, setButtonWidth] = useState(Dimensions.get('window').width / 4);
 
     const numberInputHandler = inputText => {
         setEnteredValue(inputText.replace(/[^0-9]/g, ''));
@@ -32,6 +34,18 @@ const StartGameScreen = props => {
         setEnteredValue('');
         setConfirmed(false);
     };
+
+    /* handle width button orientation */
+    useEffect(() => {
+        const updateLayout = () => {
+            setButtonWidth(Dimensions.get('window').width / 4)
+        };
+        Dimensions.addEventListener('change', updateLayout);
+        return () => {
+            Dimensions.removeEventListener('change', updateLayout);
+        };
+    });
+    /* handle width button orientation */
 
     const confirmInputHandler = () => {
         const choosenNumber = parseInt(enteredValue);
@@ -67,6 +81,7 @@ const StartGameScreen = props => {
         <ScrollView>
             <KeyboardAvoidingView behavior="position">
                 <TouchableWithoutFeedback onPress={() => {
+                    /* handle keyboard */
                     Keyboard.dismiss(); // inline function
                 }}>
                     <View style={styles.screen}>
@@ -84,10 +99,10 @@ const StartGameScreen = props => {
                                 value={enteredValue}
                             />
                             <View style={styles.btnContainer}>
-                                <View style={DefaultStyles.btn}>
+                                <View style={{ width: buttonWidth }}>
                                     <Button title="Reset" color={Colors.accent} onPress={resetInputHandler} />
                                 </View>
-                                <View style={DefaultStyles.btn}>
+                                <View style={{ width: buttonWidth }}>
                                     <Button title="Confirm" color={Colors.primary} onPress={confirmInputHandler} />
                                 </View>
                             </View>
