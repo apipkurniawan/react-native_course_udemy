@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, Text, StyleSheet, Button, Alert, ScrollView, Dimensions, FlatList } from "react-native";
+import { View, Text, StyleSheet, Button, Alert, Dimensions, FlatList } from "react-native";
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import BodyText from '../components/BodyText';
 import DefaultStyles from '../constants/default-styles'; // using global style
+
+/* to lock or unlock orientation */
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 const generateRandomBetween = (min, max, exclude) => {
     min = Math.ceil(min);
@@ -37,6 +40,9 @@ const renderListItem = (listLength, itemData) => {
 };
 
 const GameScreen = props => {
+    /* lock orientation */
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+
     const { userChoise, onGameOver } = props;
     const initialiGuess = generateRandomBetween(1, 100, userChoise);
     const [currentGuess, setCurrentGuess] = useState(initialiGuess);
