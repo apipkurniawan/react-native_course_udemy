@@ -15,6 +15,7 @@ https://expo.io/learn
 https://icons.expo.fyi/
 
 * font :
+npm install --save expo-font
 https://docs.expo.io/versions/latest/sdk/font/
 
 * component :
