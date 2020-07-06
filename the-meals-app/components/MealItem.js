@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12
     },
     title: {
-        fontFamily: 'open-sans',
-        fontSize: 20,
+        fontFamily: 'BillionDreams_PERSONAL',
+        fontSize: 28,
         color: 'white',
         textAlign: 'center'
     }

@@ -10,7 +10,9 @@ useScreens();
 const fetchFonts = () => {
   return Font.loadAsync({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
-    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+    'vagnotie': require('./assets/fonts/vagnotie.ttf'),
+    'BillionDreams_PERSONAL': require('./assets/fonts/BillionDreams_PERSONAL.ttf')
   });
 };
 

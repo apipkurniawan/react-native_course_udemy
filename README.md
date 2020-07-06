@@ -17,6 +17,7 @@ https://icons.expo.fyi/
 * font :
 npm install --save expo-font
 https://docs.expo.io/versions/latest/sdk/font/
+download font : https://www.dafont.com/new.php
 
 * component :
 https://docs.nativebase.io/
